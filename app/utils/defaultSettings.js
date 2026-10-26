@@ -3,10 +3,14 @@ import defaultMicrobreakIdeas from './defaultMicrobreakIdeas.js'
 import { insideFlatpak, insideWindowsStore, insideSnap, insideWindowsPortable } from './utils.js'
 
 export default {
-  microbreakDuration: 20000,
+  microbreakDuration: 60000,
   microbreakInterval: 600000,
   breakDuration: 300000,
   breakInterval: 2,
+  longBreak: true,
+  longBreakDuration: 3600000,
+  longBreakInterval: 10800000,
+  longBreakIdeas: [{ data: ['Long break', 'Step away from your computer for a longer rest.'], enabled: true }],
   breakNotification: true,
   microbreakNotification: true,
   breakNotificationInterval: 30000,

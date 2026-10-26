@@ -73,6 +73,18 @@ describe('pauseBreaksShortcut', () => {
     })
 
     describe('skipToNextScheduledBreakShortcut', () => {
+      it('preserves the Long break type when jumping to the next scheduled break', () => {
+        const skipToBreak = vi.fn()
+        onShortcut({
+          name: 'skipToNextScheduledBreakShortcut',
+          settings: null,
+          breakPlanner: { _scheduledBreakType: 'break', isLongBreak: true },
+          functions: { skipToBreak },
+          log: { info: vi.fn() }
+        })
+        expect(skipToBreak).toHaveBeenCalledWith(undefined, true)
+      })
+
       it('skips to next scheduled break', () => {
         const log = { info: vi.fn() }
         const skipToBreak = vi.fn()
@@ -171,7 +183,7 @@ describe('pauseBreaksShortcut', () => {
         })
 
         expect(log.info).toHaveBeenCalledWith('Stretchly: skipping to next Long break by shortcut')
-        expect(skipToBreak).toHaveBeenCalled()
+        expect(skipToBreak).toHaveBeenCalledWith(undefined, true)
         expect(pauseBreaks).not.toHaveBeenCalled()
       })
     })

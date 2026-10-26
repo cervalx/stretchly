@@ -161,27 +161,14 @@
     </div>
     <div>
       <label data-i18next="preferences.schedule.breakFor" data-same-width-label for="miniBreakFor"></label>
-      <input type="range" min="10" max="600" step="10" list="tickmarksMiniBreakFor" name="microbreakDuration"
-        data-divisor="1000" id="miniBreakFor">
+      <input type="range" min="1" max="10" step="1" list="tickmarksMiniBreakFor" name="microbreakDuration"
+        data-divisor="60000" id="miniBreakFor">
       <datalist id="tickmarksMiniBreakFor">
+        <option value="1"></option>
+        <option value="5"></option>
         <option value="10"></option>
-        <option value="20"></option>
-        <option value="30"></option>
-        <option value="40"></option>
-        <option value="50"></option>
-        <option value="60"></option>
-        <option value="80"></option>
-        <option value="120"></option>
-        <option value="180"></option>
-        <option value="240"></option>
-        <option value="300"></option>
-        <option value="360"></option>
-        <option value="420"></option>
-        <option value="480"></option>
-        <option value="540"></option>
-        <option value="600"></option>
       </datalist>
-      <output data-unit="seconds"></output>
+      <output data-unit="minutes"></output>
     </div>
     <div>
       <label data-i18next="preferences.schedule.every" data-same-width-label for="miniBreakEvery"></label>
@@ -256,6 +243,31 @@
     <div>
       <input type="checkbox" value="breakPostpone" id="enablePostponeLong">
       <label data-i18next="preferences.schedule.enablePostponeLong" for="enablePostponeLong"></label>
+    </div>
+    <div>
+      <hr />
+    </div>
+    <div>
+      <span data-i18next="preferences.schedule.extendedBreaks"></span>
+    </div>
+    <div>
+      <p data-i18next="preferences.schedule.extendedBreaksInfo"></p>
+    </div>
+    <div>
+      <input type="checkbox" class="enabletype" value="longBreak" id="enableExtendedBreaks">
+      <label data-i18next="preferences.schedule.enableExtendedBreaks" for="enableExtendedBreaks"></label>
+    </div>
+    <div>
+      <label data-i18next="preferences.schedule.breakFor" data-same-width-label for="extendedBreakFor"></label>
+      <input type="range" min="1" max="120" step="1" name="longBreakDuration"
+        data-divisor="60000" id="extendedBreakFor">
+      <output data-unit="minutes"></output>
+    </div>
+    <div>
+      <label data-i18next="preferences.schedule.every" data-same-width-label for="extendedBreakEvery"></label>
+      <input type="range" min="1" max="480" step="1" name="longBreakInterval"
+        data-divisor="60000" id="extendedBreakEvery">
+      <output data-unit="minutes"></output>
     </div>
     <div data-strict-mode>
       <hr />

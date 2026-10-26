@@ -5,25 +5,25 @@ const allOptions = {
   title: {
     long: '--title',
     short: '-T',
-    description: 'Specify title for next break (Long or Mini)',
+    description: 'Specify title for next break (Mini, Regular, or Long)',
     withValue: true
   },
   text: {
     long: '--text',
     short: '-t',
-    description: 'Specify text for next break (Long break only)',
+    description: 'Specify text for next break (Regular or Long)',
     withValue: true
   },
   noskip: {
     long: '--noskip',
     short: '-n',
-    description: 'Do not skip directly to this break (Long or Mini)',
+    description: 'Do not skip directly to this break (Mini, Regular, or Long)',
     withValue: false
   },
   wait: {
     long: '--wait',
     short: '-w',
-    description: 'Specify an interval to wait before skipping to this break (Long or Mini) [HHhMMm|HHh|MMm|MM]',
+    description: 'Specify an interval to wait before skipping to this break (Mini, Regular, or Long) [HHhMMm|HHh|MMm|MM]',
     withValue: true
   },
   duration: {
@@ -75,7 +75,11 @@ const allCommands = {
     options: [allOptions.text, allOptions.title, allOptions.noskip, allOptions.wait]
   },
   last: {
-    description: 'Start the last Mini or Long break again'
+    description: 'Start the last Mini, Regular, or Long break again'
+  },
+  regular: {
+    description: 'Skip to the Regular break, customize it',
+    options: [allOptions.text, allOptions.title, allOptions.noskip, allOptions.wait]
   },
   preferences: {
     description: 'Open Preferences window'

@@ -2,10 +2,10 @@
   "main": {
     "toolTipHeader": "Stretchly - The break time reminder app",
     "microbreakIn": "Mini break in $t(utils.seconds, {'count': {{seconds}} })",
-    "breakIn": "Long break in $t(utils.seconds, {'count': {{seconds}} })",
+    "breakIn": "Regular break in $t(utils.seconds, {'count': {{seconds}} })",
     "resumingBreaks": "Resuming breaks",
     "downloadLatestVersion": "Download latest version",
-    "toBreak": "Long break",
+    "toBreak": "Regular break",
     "toMicrobreak": "Mini break",
     "skipToTheNext": "Skip to the next",
     "resume": "Resume breaks",
@@ -23,7 +23,9 @@
     "cancel": "Cancel",
     "preferences": "Preferences",
     "contributorPreferences": "Contributor Preferences",
-    "syncPreferences": "Sync Preferences"
+    "syncPreferences": "Sync Preferences",
+    "longBreakIn": "Long break in $t(utils.seconds, {'count': {{seconds}} })",
+    "toLongBreak": "Long break"
   },
   "break": {
     "postpone": "Postpone this break",
@@ -60,16 +62,19 @@
       "every": "Every:",
       "showNotificationBeforeMiniBreak": "Show notification before Mini break starts",
       "enablePostponeMini": "Enable postponement for Mini break",
-      "longBreaks": "Long breaks:",
-      "longBreaksInfo": "Long breaks are taken less regularly, but are of greater duration, allowing you to take an extended break from your work.",
-      "enableLongBreaks": "Enable Long breaks",
-      "showNotificationBeforeLongBreak": "Show notification before Long break starts",
-      "enablePostponeLong": "Enable postponement for Long break",
+      "longBreaks": "Regular breaks:",
+      "longBreaksInfo": "Regular breaks give you more time to rest between Mini breaks.",
+      "enableLongBreaks": "Enable Regular breaks",
+      "showNotificationBeforeLongBreak": "Show notification before Regular and Long breaks start",
+      "enablePostponeLong": "Enable postponement for Regular and Long breaks",
       "strictMode": "Strict mode:",
-      "strictModeInfo": "Strict mode prevents you from skipping either Mini breaks or Long breaks and is designed to help discipline.",
+      "strictModeInfo": "Strict mode prevents you from skipping breaks.",
       "enableStrictMini": "Enable Strict mode for Mini breaks",
-      "enableStrictLong": "Enable Strict mode for Long breaks",
-      "cantDisableBoth": "It is not possible to disable both types of breaks"
+      "enableStrictLong": "Enable Strict mode for Regular and Long breaks",
+      "cantDisableBoth": "At least one break type must remain enabled",
+      "extendedBreaks": "Long breaks:",
+      "extendedBreaksInfo": "Take an extended rest, by default for 1 hour after every 3 hours. Sound, notifications, postponement, and strict mode use the Regular break settings.",
+      "enableExtendedBreaks": "Enable Long breaks"
     },
     "theme": {
       "appearance": "Appearance:",
@@ -127,7 +132,7 @@
     "title": "Contributor Preferences",
     "notifications": "Break notifications:",
     "notificationsInfo": "System notification shown before breaks to let you prepare for it.",
-    "beforeLongBreak": "Long break:",
+    "beforeLongBreak": "Regular and Long break:",
     "beforeMiniBreak": "Mini break:",
     "newVersion": "New version:",
     "newVersionNotification": "Notify when new version is available",
@@ -140,7 +145,7 @@
     "postponableFor": "Postponable for:",
     "postponeFor": "Postpone for:",
     "maxPostpones": "Maximum postpones:",
-    "longBreaks": "Long breaks:",
+    "longBreaks": "Regular and Long breaks:",
     "pauseUntilMorning": "Pause until morning:",
     "pauseUntil": "Pause until:",
     "pauseUntilMorningInfo": "Specify till what hour 'Pause until morning' should pause.",
@@ -156,7 +161,7 @@
     "sounds": "Sounds:",
     "volume": "Volume:",
     "miniBreakStartSound": "Sound at the start of Mini break",
-    "longBreakStartSound": "Sound at the start of Long break",
+    "longBreakStartSound": "Sound at the start of Regular and Long break",
     "naturalBreaks": "Natural breaks:",
     "naturalBreaksInfo": "If monitoring of idle time is enabled in main Preferences, you can specify after what time the breaks should be paused.",
     "pauseAfter": "Pause after:",
@@ -209,11 +214,12 @@
     "indefinitely": "Indefinitely",
     "dndMode": "Do Not Disturb is on",
     "appExclusion": "App exclusion rule",
-    "nextLongBreak": "Next Long break",
+    "nextLongBreak": "Next Regular break",
     "nextMiniBreak": "Next Mini break",
     "afterMiniBreak_one": "after {{count}} Mini break",
     "afterMiniBreak_other": "after {{count}} Mini breaks",
-    "resuming": "Resuming"
+    "resuming": "Resuming",
+    "nextExtendedBreak": "Next Long break"
   },
   "miniBreakIdeas": {
     "aaa": {

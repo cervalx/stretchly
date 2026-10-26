@@ -2,6 +2,14 @@ import 'chai/register-should'
 import Command from '../app/utils/commands'
 
 describe('commands', () => {
+  it('parses Regular breaks separately from Long breaks', () => {
+    const cmd = new Command(['regular', '-T', 'Rest', '-t', 'Step away'], '1.2.3')
+    cmd.hasSupportedCommand.should.be.equal(true)
+    cmd.command.should.be.equal('regular')
+    cmd.options.title.should.be.equal('Rest')
+    cmd.options.text.should.be.equal('Step away')
+  })
+
   it('should parse a valid simple command', () => {
     const input = ['help']
     const cmd = new Command(input, '1.2.3')

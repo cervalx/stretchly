@@ -6,6 +6,11 @@
 
 *Stretchly* is a cross-platform [Electron](https://www.electronjs.org/) app that reminds you to take breaks when working on your computer.
 
+This custom fork adds alternating message groups and a third break type.
+See [custom break scheduling](#mini-regular-and-long-breaks-in-this-custom-build).
+The upstream documentation below calls this fork's Regular break a Long break,
+except where the custom behavior is explicitly described.
+
 [![Become a Sponsor!](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=success)](https://github.com/sponsors/hovancik) [![Become a Patron!](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=Patreon&color=success)](https://www.patreon.com/hovancik)
 
 ## Table of contents
@@ -229,6 +234,61 @@ Here are the preferences editable via the app. If values in the app does not sui
 In the preferences file, change `useIdeasFromSettings: false,` to `useIdeasFromSettings: true,` and edit `breakIdeas` and `microbreakIdeas`.
 
 Note that when a new *Stretchly* version with new break ideas is out, your custom ideas will not be overwritten. You can reset break ideas to the latest defaults when you "Restore defaults" from Preferences window.
+
+##### Alternating two groups of break ideas
+
+In this custom build, add `"group": 1` or `"group": 2` to each custom idea.
+With `useIdeasFromSettings` enabled, ideas alternate between group 1 and group 2,
+starting with group 1. Each group is shuffled without repetition until all of its
+enabled ideas have been shown. This gives each group half of the turns, even
+when the groups have different numbers of ideas.
+
+For example:
+
+```json
+"microbreakIdeas": [
+  { "data": "Rest your eyes.", "enabled": true, "group": 1 },
+  { "data": "Stretch your hands.", "enabled": true, "group": 1 },
+  { "data": "Drink some water.", "enabled": true, "group": 2 }
+]
+```
+
+The same `group` field works in `breakIdeas`, keeping its existing title/text
+format. Ideas without `group: 2` belong to group 1. If either group is empty or
+disabled, ideas are shuffled from the remaining group. Existing configurations
+without groups behave as before. Mini and Long breaks alternate their own groups
+independently; grouping does not change the schedule or durations. Reloading ideas
+or restarting Stretchly starts each sequence again.
+
+##### Mini, Regular, and Long breaks in this custom build
+
+The former Long break is named Regular break. Its existing schedule and settings
+(`breakDuration`, `breakInterval`, and `breakIdeas`) are preserved. All three
+duration sliders start at 1 minute. Mini breaks default to 1 minute for new
+configurations; existing saved durations remain unchanged until edited.
+
+The new Long break defaults to 60 minutes after a 180-minute interval, and has
+its own enable switch and duration/interval sliders in Schedule. It takes
+priority when due, then the Mini/Regular schedule continues. The next
+three-hour interval starts after the Long break ends. Pausing, idle resets,
+and resetting the schedule restart the interval, following Stretchly's normal
+schedule reset behavior.
+
+Configuration keys are `longBreak` (enabled), `longBreakDuration` and
+`longBreakInterval` (milliseconds), and `longBreakIdeas` (the same title/text
+format as `breakIdeas`, including optional message groups). Long breaks share
+the Regular break sound, notification, postpone, strict mode, and manual finish
+settings. The tray menu can start any of the three break types immediately.
+The `long` CLI command and Long break shortcut start the new Long break;
+use the `regular` CLI command for what was previously called a Long break.
+
+The custom macOS workflow builds Apple Silicon DMGs on GitHub when pushed to
+the `alternating-message-groups` branch, or when started manually from Actions.
+The DMG is retained as a workflow artifact for 14 days. Builds use ad-hoc signing
+without an Apple developer certificate and are not notarized; macOS may require
+approval before opening them.
+
+This fork's custom changes were AI-assisted.
 
 ##### Using HTML in break ideas
 You can use simple HTML formatting in custom break ideas to enhance their appearance:

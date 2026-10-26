@@ -72,6 +72,7 @@ nativeTheme.on('updated', function theThemeHasChanged () {
 
 let microbreakIdeas
 let breakIdeas
+let extendedBreakIdeas
 let breakPlanner
 let appIcon = null
 let autostartManager = null
@@ -179,6 +180,7 @@ if (!gotTheLock) {
         break
       }
 
+      case 'regular':
       case 'long': {
         log.info('Stretchly: skip to Long break (requested by second instance)')
         const delay = cmd.waitToMs()
@@ -187,7 +189,7 @@ if (!gotTheLock) {
           return
         }
         nextIdea = [cmd.options.title ? cmd.options.title : null, cmd.options.text ? cmd.options.text : null]
-        if (!cmd.options.noskip || delay) skipToBreak(delay)
+        if (!cmd.options.noskip || delay) skipToBreak(delay, cmd.command === 'long')
         break
       }
 
@@ -789,7 +791,11 @@ function startMicrobreakNotification () {
 }
 
 function startBreakNotification () {
-  showNotification(i18next.t('main.breakIn', { seconds: settings.get('breakNotificationInterval') / 1000 }))
+  const key = breakPlanner.isLongBreak ? 'main.longBreakIn' : 'main.breakIn'
+  const seconds = breakPlanner.isLongBreak
+    ? Math.max(0, Math.min(settings.get('breakNotificationInterval'), breakPlanner.nextLongBreakAt - Date.now())) / 1000
+    : settings.get('breakNotificationInterval') / 1000
+  showNotification(i18next.t(key, { seconds: Math.ceil(seconds) }))
   log.info('Stretchly: showing Long break notification')
   breakPlanner.nextBreakAfterNotification()
   updateTray()
@@ -987,7 +993,7 @@ function startBreak () {
     return
   }
 
-  const breakDuration = settings.get('breakDuration')
+  const breakDuration = breakPlanner.breakDuration
   const strictMode = settings.get('breakStrictMode')
   const postponesLimit = settings.get('breakPostponesLimit')
   const postponableDurationPercent = settings.get('breakPostponableDurationPercent')
@@ -998,10 +1004,11 @@ function startBreak () {
   const modalPath = 'file://' + join(__dirname, '/break.html')
   breakWins = []
 
-  const defaultNextIdea = settings.get('ideas') ? breakIdeas.randomElement : ['', '']
+  const currentIdeas = breakPlanner.isLongBreak ? extendedBreakIdeas : breakIdeas
+  const defaultNextIdea = settings.get('ideas') ? currentIdeas.randomElement : ['', '']
   const idea = nextIdea ? (nextIdea.map((val, index) => val || defaultNextIdea[index])) : defaultNextIdea
   nextIdea = null
-  lastBreak = { type: 'long', idea }
+  lastBreak = { type: breakPlanner.isLongBreak ? 'long' : 'regular', idea }
 
   if (!settings.get('silentNotifications')) {
     const sound = settings.get('longBreakStartSound')
@@ -1262,7 +1269,7 @@ function skipToMicrobreak (delay) {
   updateTray()
 }
 
-function skipToBreak (delay) {
+function skipToBreak (delay, isLongBreak = false) {
   if (microbreakWins) {
     increaseDanger(1)
     microbreakWins = breakComplete(false, microbreakWins)
@@ -1272,10 +1279,10 @@ function skipToBreak (delay) {
     breakWins = breakComplete(false, breakWins)
   }
   if (delay) {
-    breakPlanner.skipToBreak(delay)
+    breakPlanner.skipToBreak(delay, isLongBreak)
     log.info(`Stretchly: skipping to Long break in ${delay}ms`)
   } else {
-    breakPlanner.skipToBreak()
+    breakPlanner.skipToBreak(undefined, isLongBreak)
     log.info('Stretchly: skipping to Long break')
   }
   updateTray()
@@ -1298,7 +1305,7 @@ function startLastBreakAgain () {
   if (lastBreak.type === 'mini') {
     skipToMicrobreak()
   } else {
-    skipToBreak()
+    skipToBreak(undefined, lastBreak.type === 'long')
   }
 }
 
@@ -1349,6 +1356,7 @@ function loadIdeas () {
 
   breakIdeas = new IdeasLoader(longBreakIdeasData).ideas()
   microbreakIdeas = new IdeasLoader(miniBreakIdeasData).ideas()
+  extendedBreakIdeas = new IdeasLoader(settings.get('longBreakIdeas')).ideas()
 }
 
 function pauseBreaks (milliseconds) {
@@ -1513,7 +1521,13 @@ function getTrayMenuTemplate () {
         click: () => skipToBreak()
       }])
     }
-    if (settings.get('break') || settings.get('microbreak')) {
+    if (settings.get('longBreak')) {
+      submenu.push({
+        label: i18next.t('main.toLongBreak'),
+        click: () => skipToBreak(undefined, true)
+      })
+    }
+    if (settings.get('break') || settings.get('microbreak') || settings.get('longBreak')) {
       trayMenu.push({
         label: i18next.t('main.skipToTheNext'),
         submenu
@@ -1715,6 +1729,11 @@ ipcMain.on('save-setting', function (event, key, value) {
   }
 
   settings.set(key, value)
+
+  if (key === 'longBreak' || key === 'longBreakInterval') {
+    breakPlanner.nextLongBreakAt = Date.now() + settings.get('longBreakInterval')
+    if (!microbreakWins && !breakWins && !breakPlanner.isPaused) breakPlanner.reset()
+  }
 
   updateTray()
 })

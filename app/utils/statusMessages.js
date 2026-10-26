@@ -9,6 +9,7 @@ class StatusMessages {
     this.timeToNextBreak = breakPlanner.timeToNextBreak
     this.isPaused = breakPlanner.isPaused
     this.breakNumber = breakPlanner.breakNumber
+    this.isLongBreak = breakPlanner.isLongBreak
     this.settings = settings
     this.i18next = i18next
     this.humanizeDuration = humanizeDuration
@@ -47,7 +48,7 @@ class StatusMessages {
     const breakNumber = this.breakNumber % breakInterval
 
     if (this.reference === 'startBreak' || this.reference === 'startBreakNotification') {
-      message += this.i18next.t('statusMessages.nextLongBreak') + ' ' +
+      message += this.i18next.t(this.isLongBreak ? 'statusMessages.nextExtendedBreak' : 'statusMessages.nextLongBreak') + ' ' +
         formatTimeIn(this.timeToNextBreak, this.settings.get('language'), this.i18next, this.humanizeDuration)
       return message
     }
