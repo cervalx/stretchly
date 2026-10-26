@@ -158,11 +158,10 @@ class BreaksPlanner extends EventEmitter {
     }
     if (this.settings.get('longBreak')) {
       const longBreakDelay = Math.max(0, this.nextLongBreakAt - Date.now())
-      const nextBreakDelay = this.scheduler
-        ? this.scheduler.delay + (this.scheduler.reference.endsWith('Notification')
-            ? this.settings.get(`${this._scheduledBreakType}NotificationInterval`)
-            : 0)
-        : Infinity
+      const notificationInterval = this.scheduler?.reference.endsWith('Notification')
+        ? this.settings.get(`${this._scheduledBreakType}NotificationInterval`)
+        : 0
+      const nextBreakDelay = this.scheduler ? this.scheduler.delay + notificationInterval : Infinity
       if (longBreakDelay <= nextBreakDelay) {
         this.isLongBreak = true
         const notificationDelay = breakNotification ? Math.min(breakNotificationInterval, longBreakDelay) : 0

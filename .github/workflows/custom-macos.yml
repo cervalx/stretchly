@@ -19,7 +19,15 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/setup-build
-      - run: npm run lint
+      - name: Lint
+        run: |
+          if output=$(npm run lint 2>&1); then
+            printf '%s\n' "$output"
+          else
+            printf '%s\n' "$output"
+            while IFS= read -r line; do printf '::error::%s\n' "$line"; done <<< "$output"
+            exit 1
+          fi
       - run: npm rebuild node-desktop-idle-v2
       - run: npm test
       - name: Build Apple Silicon app
