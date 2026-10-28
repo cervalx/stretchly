@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Custom message groups alternate independently within each break type.
 - A third break type: Long breaks defaulting to 1 hour after every 3 hours, with separate schedule controls and messages.
 - Independent Strict mode checkboxes for Mini, Regular, and Long breaks.
-- A GitHub Actions workflow to test and build an Apple Silicon macOS app on the custom branch or manual dispatch.
+- A manually triggered GitHub Actions workflow to test and build an Apple Silicon macOS app.
 - CLI commands to postpone, skip and finish the current break
 - advanced preferences for custom break sounds
 - `forceX11OnWayland` advanced preference to restart with the X11 backend on Wayland, so breaks show on all monitors

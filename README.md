@@ -286,8 +286,8 @@ respectively. The tray menu can start any of the three break types immediately.
 The `long` CLI command and Long break shortcut start the new Long break;
 use the `regular` CLI command for what was previously called a Long break.
 
-The custom macOS workflow builds Apple Silicon DMGs on GitHub when pushed to
-the `alternating-message-groups` branch, or when started manually from Actions.
+The custom macOS workflow builds Apple Silicon DMGs on GitHub only when started
+manually. Builds should be started only when the user explicitly asks.
 The DMG is retained as a workflow artifact for 14 days. Builds use ad-hoc signing
 without an Apple developer certificate and are not notarized; macOS may require
 approval before opening them.
