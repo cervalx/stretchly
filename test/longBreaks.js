@@ -133,6 +133,19 @@ describe('Long breaks', () => {
     assert.equal(planner.breakDuration, 300000)
   })
 
+  it('keeps Regular and Long strict mode independent', () => {
+    for (const regular of [false, true]) {
+      for (const long of [false, true]) {
+        values.breakStrictMode = regular
+        values.longBreakStrictMode = long
+        planner.isLongBreak = false
+        assert.equal(planner.breakStrictMode, regular)
+        planner.isLongBreak = true
+        assert.equal(planner.breakStrictMode, long)
+      }
+    }
+  })
+
   it('restarts the three-hour timer when the schedule is reset', () => {
     planner.nextBreak()
     now += 9000000

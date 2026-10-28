@@ -258,7 +258,7 @@ app.on('window-all-closed', () => {
 })
 app.on('before-quit', (event) => {
   if ((breakPlanner?.scheduler?.reference === 'finishMicrobreak' && settings?.get('microbreakStrictMode')) ||
-      (breakPlanner?.scheduler?.reference === 'finishBreak' && settings?.get('breakStrictMode'))
+      (breakPlanner?.scheduler?.reference === 'finishBreak' && breakPlanner.breakStrictMode)
   ) {
     log.info('Stretchly: preventing app closure (in break with strict mode)')
     event.preventDefault()
@@ -994,7 +994,7 @@ function startBreak () {
   }
 
   const breakDuration = breakPlanner.breakDuration
-  const strictMode = settings.get('breakStrictMode')
+  const strictMode = breakPlanner.breakStrictMode
   const postponesLimit = settings.get('breakPostponesLimit')
   const postponableDurationPercent = settings.get('breakPostponableDurationPercent')
   const postponable = settings.get('breakPostpone') &&
@@ -1133,7 +1133,7 @@ function startBreak () {
     breakWinLocal.setAlwaysOnTop(!showBreaksAsRegularWindows, 'pop-up-menu')
     if (breakWinLocal) {
       breakWinLocal.on('close', (e) => {
-        if (breakPlanner.scheduler.timeLeft > 0 && settings.get('breakStrictMode')) {
+        if (breakPlanner.scheduler.timeLeft > 0 && breakPlanner.breakStrictMode) {
           log.info('Stretchly: preventing closing break window as in strict mode')
           e.preventDefault()
         }
@@ -1500,7 +1500,7 @@ function getTrayMenuTemplate () {
 
   if ((breakPlanner.scheduler.reference === 'finishMicrobreak' && settings.get('microbreakStrictMode') &&
         !settings.get('showTrayMenuInStrictMode')) ||
-      (breakPlanner.scheduler.reference === 'finishBreak' && settings.get('breakStrictMode') &&
+      (breakPlanner.scheduler.reference === 'finishBreak' && breakPlanner.breakStrictMode &&
       !settings.get('showTrayMenuInStrictMode'))
   ) {
     // empty menu, we are in strict mode

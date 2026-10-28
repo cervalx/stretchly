@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Custom message groups alternate independently within each break type.
 - A third break type: Long breaks defaulting to 1 hour after every 3 hours, with separate schedule controls and messages.
+- Independent Strict mode checkboxes for Mini, Regular, and Long breaks.
 - A GitHub Actions workflow to test and build an Apple Silicon macOS app on the custom branch or manual dispatch.
 - CLI commands to postpone, skip and finish the current break
 - advanced preferences for custom break sounds
@@ -24,7 +25,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - time-to-break tray icon no longer requests a missing number icon when more than 99 minutes remain
 
 ### Changed
-- Rename the previous Long break to Regular break and start all duration sliders at 1 minute.
+- Rename the previous Long break to Regular break; Regular and Long duration sliders start at 1 minute.
+- Restore the original Mini duration slider (10–600 seconds in 10-second steps) and 20-second default.
 - Use `regular` for the former Long break CLI command; `long` and the Long break shortcut now start the new Long break.
 - macOS Ventura (13) or later is now required
 - macOS app bundles are now ad-hoc signed

@@ -213,7 +213,8 @@ Here are the preferences editable via the app. If values in the app does not sui
 - `microbreak` - enable Mini breaks
 - `break` - enable Long breaks
 - `microbreakStrictMode` - enable strict mode for Mini breaks
-- `breakStrictMode` - enable strict mode for Long breaks
+- `breakStrictMode` - enable strict mode for Regular breaks
+- `longBreakStrictMode` - enable strict mode for Long breaks
 - `mainColor` - theme color code (for Long breaks),
 - `miniBreakColor` - theme color code (for Mini breaks),
 - `transparentMode` - show break windows as transparent
@@ -263,9 +264,10 @@ or restarting Stretchly starts each sequence again.
 ##### Mini, Regular, and Long breaks in this custom build
 
 The former Long break is named Regular break. Its existing schedule and settings
-(`breakDuration`, `breakInterval`, and `breakIdeas`) are preserved. All three
-duration sliders start at 1 minute. Mini breaks default to 1 minute for new
-configurations; existing saved durations remain unchanged until edited.
+(`breakDuration`, `breakInterval`, and `breakIdeas`) are preserved. Mini break
+durations use the original seconds slider: 10–600 seconds in 10-second steps,
+with a 20-second default. Regular and Long duration sliders start at 1 minute.
+Existing saved durations remain unchanged until edited.
 
 The new Long break defaults to 60 minutes after a 180-minute interval, and has
 its own enable switch and duration/interval sliders in Schedule. It takes
@@ -277,8 +279,10 @@ schedule reset behavior.
 Configuration keys are `longBreak` (enabled), `longBreakDuration` and
 `longBreakInterval` (milliseconds), and `longBreakIdeas` (the same title/text
 format as `breakIdeas`, including optional message groups). Long breaks share
-the Regular break sound, notification, postpone, strict mode, and manual finish
-settings. The tray menu can start any of the three break types immediately.
+the Regular break sound, notification, postpone, and manual finish settings.
+Each type has its own Strict mode checkbox: `microbreakStrictMode`,
+`breakStrictMode`, and `longBreakStrictMode` for Mini, Regular, and Long breaks,
+respectively. The tray menu can start any of the three break types immediately.
 The `long` CLI command and Long break shortcut start the new Long break;
 use the `regular` CLI command for what was previously called a Long break.
 

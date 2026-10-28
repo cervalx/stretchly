@@ -70,10 +70,11 @@
       "strictMode": "Strict mode:",
       "strictModeInfo": "Strict mode prevents you from skipping breaks.",
       "enableStrictMini": "Enable Strict mode for Mini breaks",
-      "enableStrictLong": "Enable Strict mode for Regular and Long breaks",
+      "enableStrictLong": "Enable Strict mode for Regular breaks",
+      "enableStrictExtended": "Enable Strict mode for Long breaks",
       "cantDisableBoth": "At least one break type must remain enabled",
       "extendedBreaks": "Long breaks:",
-      "extendedBreaksInfo": "Take an extended rest, by default for 1 hour after every 3 hours. Sound, notifications, postponement, and strict mode use the Regular break settings.",
+      "extendedBreaksInfo": "Take an extended rest, by default for 1 hour after every 3 hours. Sound, notifications, and postponement use the Regular break settings.",
       "enableExtendedBreaks": "Enable Long breaks"
     },
     "theme": {

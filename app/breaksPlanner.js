@@ -298,6 +298,10 @@ class BreaksPlanner extends EventEmitter {
     return this.settings.get(this.isLongBreak ? 'longBreakDuration' : 'breakDuration')
   }
 
+  get breakStrictMode () {
+    return this.settings.get(this.isLongBreak ? 'longBreakStrictMode' : 'breakStrictMode')
+  }
+
   naturalBreaks (shouldUse) {
     if (shouldUse) {
       this.naturalBreaksManager.start()
