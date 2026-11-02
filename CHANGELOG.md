@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - CLI command and shortcut to start the last break again
 
 ### Fixed
+- Restart the Long break interval on resume so hours spent asleep or paused do not trigger an immediate Long break.
 - fix debug file and folder links when paths contain HTML special characters
 - fix custom break images when the user data path contains URL special characters
 - fix snap startup crash

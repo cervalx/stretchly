@@ -77,6 +77,20 @@ describe('Long breaks', () => {
     assert.equal(planner.breakDuration, 300000)
   })
 
+  it('restarts the Long break interval after sleeping or pausing for hours', () => {
+    for (const pauseDuration of [1, 28800000]) {
+      planner.nextBreak()
+      planner.pause(pauseDuration)
+      now += 28800000
+      planner.resume()
+      assert.equal(planner.isPaused, false)
+      assert.equal(planner.isLongBreak, false)
+      assert.equal(planner.nextLongBreakAt, now + 10800000)
+      assert.equal(planner.scheduler.reference, 'startMicrobreakNotification')
+      assert.equal(planner.timeToNextBreak, 600000)
+    }
+  })
+
   it('starts an overdue Long break immediately', () => {
     now += 10800001
     planner.nextBreak()

@@ -272,7 +272,8 @@ Existing saved durations remain unchanged until edited.
 The new Long break defaults to 60 minutes after a 180-minute interval, and has
 its own enable switch and duration/interval sliders in Schedule. It takes
 priority when due, then the Mini/Regular schedule continues. The next
-three-hour interval starts after the Long break ends. Pausing, idle resets,
+three-hour interval starts after the Long break ends or breaks resume from a pause
+(including sleep or screen lock). Time spent paused does not make a Long break overdue. Idle resets,
 and resetting the schedule restart the interval, following Stretchly's normal
 schedule reset behavior.
 

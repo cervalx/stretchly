@@ -258,6 +258,7 @@ class BreaksPlanner extends EventEmitter {
 
   resume () {
     this.scheduler.cancel()
+    this.nextLongBreakAt = Date.now() + this.settings.get('longBreakInterval')
     this.isPaused = false
     this.appExclusionsManager.reset()
     this.nextBreak()
